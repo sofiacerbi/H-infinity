@@ -68,9 +68,9 @@ w2_n = s/300+1;
 w2 = syslin('c',w2_n,w2_d);
 
 //Se crea una planta generalizada
-[Ap0,Bp0,Cp0,Dp0]=abcd(planta);
-[Aw1,Bw1,Cw1,Dw1]=abcd(w1);
-[Aw2,Bw2,Cw2,Dw2]=abcd(w2);
+[Ap0,Bp0,Cp0,Dp0] = abcd(planta);
+[Aw1,Bw1,Cw1,Dw1] = abcd(w1);
+[Aw2,Bw2,Cw2,Dw2] = abcd(w2);
 
 Ap = [Ap0 zeros(size(Ap0,1),size(Aw1,2)) zeros(size(Ap0,1),size(Aw2,2)); -Bw1*Cp0 Aw1 zeros(size(Aw1,1),size(Aw2,2)); Bw2*Cp0 zeros(size(Aw2,1),size(Aw1,2)) Aw2];
 Bp = [zeros(size(Bp0,1),size(Bw1,2)) Bp0; Bw1 zeros(size(Bw1,1),size(Bp0,2)); zeros(size(Bw2,1),size(Bw1,2)) zeros(size(Bw2,1),size(Bp0,2))];
@@ -81,11 +81,10 @@ p_gen = syslin('c',Ap,Bp,Cp,Dp);
 
 //Se sintetiza el controlador
 Sk = ccontrg(p_gen,[1,1],5);
-[Ak,Bk,Ck,Dk] = abcd(Sk)
 
-//Se cierra el lazo
+//Se cierra el lazo (cl)
 L = Sk*planta;
-S = 1/(1+L); 
+S = 1/(1+L);
 T = 1-S;
 [Acl,Bcl,Ccl,Dcl] = abcd(T);
 
