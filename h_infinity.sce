@@ -80,11 +80,5 @@ Dp = [Dw1 0.001; 0 0; 1 0];  //D12 para que la matriz sea de rango completo
 p_gen = syslin('c',Ap,Bp,Cp,Dp);
 
 //Se sintetiza el controlador
-Sk = ccontrg(p_gen,[1,1],5);
-
-//Se cierra el lazo (cl)
-L = Sk*planta;
-S = 1/(1+L);
-T = 1-S;
-[Acl,Bcl,Ccl,Dcl] = abcd(T);
-
+Sk = ccontrg(p_gen,[1,1],5); //SISO = single input single output
+[Ak,Bk,Ck,Dk] = abcd(Sk);
